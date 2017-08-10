@@ -1,0 +1,56 @@
+{
+	"songName": "Hips Don't Lie",
+	"artistName": "Shakira",
+	"defaultKey": "Bbm",
+	"defaultBPM": 100,
+	"tags": ["secular", "dance", "hips", "fibbing", "spanish", "throwback"],
+	"author": "Eric Huang",
+	"dateCreated": "160920.2300",
+	"lastEdit": "160920.2300",
+	"verified": {"status:": "true", "verifiedBy": "Polly Lal"},
+	"setsUsed": ["EricH.0003", "EricH.0009", "EstherT.0012", "PollyL.00023"], //contains setIDs (future)
+	"youtubeURL":
+	[
+		{
+			"title": "VEVO Hips Don't Lie",
+			"url": "https://www.youtube.com/watch?v=DUT5rEU6pqM"
+		}
+	],
+	"associatedFiles": 
+	[],
+	"segments": //enumerated - list in sequence
+		[
+			{	
+				"identifier": "verse1", 	//stanza type identifier
+				"superlines":	
+				[//every item represents a superline
+					{
+						"ChordLine": "6m                                   4", //each element corresponds to an index in "spaceIndex" field
+					 	"LyricLine": "I never really knew that she could dance like this"
+					},
+					{
+						"ChordLine": "5                         3m",
+						"LyricLine": "She makes a man want to speak Spanish"
+					},
+					{
+						"ChordLine": "4              5",
+						"LyricLine": "Como se llama, bonita,"
+					},
+					{
+						"ChordLine": "6m",
+						"LyricLine": "mi casa, su casa (Shakira, Shakira)"
+					}
+				]
+			},
+			{
+				"identifier": "verse2",
+				"superlines":	
+				[
+					{
+						"ChordLine": "6m                 4",
+					 	"LyricLine": "Oh baby when you talk like that..."
+					}
+				]
+			}
+		]
+}

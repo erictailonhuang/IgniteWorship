@@ -1,0 +1,418 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+} /*prevents fouc*/
+body {
+	overflow: hidden;
+}
+.character_split span:hover { /*for chord input letter highlighting*/
+    background-color: #00e0e8;
+}
+.alignleft {
+	float: left;
+	vertical-align: text-center;
+}
+.alignright {
+	float: right;
+	vertical-align: text-center;
+}
+.valigntop{
+	vertical-align: text-top;
+}
+.valignbottom{
+	vertical-align: text-bottom;
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.btn-separator:after {
+    content: ' ';
+    display: block;
+    float: left;
+    background: #ADADAD;
+    margin: 0 10px;
+    height: 34px;
+    width: 1px;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+    /*border: 1px solid red;*/
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 30.1%} /*here*/
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 60.66%;}
+.col-9 {width: 70%;} /*here*/
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/*sidebar*/
+#sidebar {
+	width: 30.2vw;
+	height: 100vh;
+	max-height: 100vh;
+	position: fixed;
+	border-right: 1px solid;
+	border-color: #dddddd;
+	background-color: #fafafa;
+	display:none;
+	transition: 0.2s;
+	margin: auto;
+	display:none; /*hides sidebar when window is narrow*/
+}
+
+#titleRow {
+	padding-top: 4%;
+	padding-bottom: 5%;
+}
+
+#title {
+	font-size: 20px;
+	font-family: 'robotoCondensed';
+	opacity: 0.68;
+	color: #000000;
+	letter-spacing: 2px;
+	padding-left: 1.3vw;
+	float: left;
+}
+
+#addNewSongBtn {
+	padding-top: 5px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    cursor:pointer;
+    outline:none;
+    font-family: 'robotoMedium';
+	font-size: 14px;
+	color: #37B0E8;
+	letter-spacing: 0.5px;
+	border: none;
+	margin: auto;
+	float: right;
+	padding-right: 0px;
+}
+
+#searchDiv { /*outer box*/
+	background-color: Transparent;
+	border-color: #b0b0b0;
+    border-radius: 1.5px;
+    background: #FFFFFF;
+    width: 26.7vw;
+    height: 5vh;
+    border: 2px solid #DDDDDD;
+    margin: auto;
+    z-index: 100;
+ 	display: table;
+  	margin: 0 auto;
+}
+#searchIcon {
+	padding: 10px;
+}
+#searchBar {
+	border: 0px solid;
+    height: 30px;
+    width: 23vw;
+    margin: auto;
+    line-height: 20px;
+    font-size: 15px;
+    font-family: 'robotoRegular';
+    outline:none;
+}
+
+#padding{
+	height: 1vh;
+}
+
+#songList {
+	font-size: 14px;
+	color: #000000;
+	height: 100%;
+	overflow-y: scroll;
+	padding-bottom: 1vh;
+}
+.selected {
+	background-color: #daecf6;
+}
+
+#songitem {
+	width: 26.7vw;
+	box-shadow: inset 0 -1px 0 0 #DDDDDD;
+	font-family: 'robotoRegular';
+	opacity: 0.87;
+	border: 0.25px;
+	line-height: 42px;
+	padding-left: 1.3vw;
+}
+
+/*tool bar*/
+#toolbar {
+	z-index: 1;
+	/*overflow: visible;*/
+	height: 5%;
+}
+
+#clearSong {
+    padding: 3px;
+    float: right;
+}
+
+#ddMenu {
+	z-index: 999;
+	left: 20vh;
+	font-size: 8pt;
+	padding: 5px;
+}
+
+#keySelectButton {
+	background-color: #37B0E8;
+	padding-top: 3px;
+}
+
+#toolbarContent {
+	/*float:right;*/
+	/*border-left: 1px solid;*/
+}
+
+#toolbarTable {
+	border-bottom: 0.5px solid;
+	border-color: #dddddd;
+}
+
+#sidebarToggle {
+	visibility: visible; /*this div is holding the toolbar height and is crappy design*/
+	height: 20px;
+}
+
+#saveButton {
+	font-family: 'robotoMedium';
+	font-size: 14px;
+	color: #37B0E8;
+	letter-spacing: 0.5px;
+}
+
+#autoSavingFlashingText {
+	color: #37B0E8;
+}
+
+/*main display*/
+
+#mainDisplay {
+	z-index: -5;
+	/*width: 100vw;*/
+	float: left;
+	position: fixed;
+	display: block;
+	top: 0;
+	padding-left: 4.5vw;
+	padding-top:30px;
+    height: auto;
+    width : auto;
+}
+
+#songTitleDisplay {
+	font-family: 'robotoRegular';
+	padding-top: 4.5vh;
+	padding-left: 2vw; /*5.7-1.7*/
+	padding-bottom: 0px;
+	font-size: 24px;
+	color: rgba(0,0,0,0.87);
+	border: 0px;
+	word-wrap: break-word;
+}
+
+#headerRow {
+	font-size: 8pt;
+	z-index: -1;
+	font-family: 'robotoRegular';
+	border: none;
+	padding-left: 4vw; /*5.7-1.7*/
+	word-wrap: break-word;
+    width: 70vw;	
+}
+
+#artistHeader {
+    float: left;
+    padding-top: 0px;
+    font-size:10pt;
+}
+
+#urlHeader {
+    float: right;
+}
+
+#txtboxBPM {
+	width: 120px;
+    padding: 15px;
+}
+
+#lyricsDisplay {
+    display: block;
+    padding-top: 17px;
+    white-space: pre-wrap; /*WHY NOT WORKING*/
+    text-transform: uppercase;
+	overflow: auto; 
+	line-height: 246%;
+	vertical-align: text-bottom;
+	resize: none;
+	position:relative;
+	z-index:2;
+	background-color: Transparent;
+	height: 80vh;
+	width: 65vw;
+}
+
+#lyricsOnlyDisplay {
+
+    display: block;
+    white-space: pre-wrap; /*WHY NOT WORKING*/
+    text-transform: uppercase;
+	overflow: auto; 
+	line-height: 150%;
+	vertical-align: text-bottom;
+	font-size: 11pt;
+	resize: none;
+	position:relative;
+	z-index:2;
+	background-color: Transparent;
+	height: 80vh;
+	width: 65vw;
+}
+
+#chordsDisplay {
+    white-space: pre-wrap;
+    position:absolute;
+	overflow: auto; 
+	line-height: 246%;
+	vertical-align: text-bottom;
+	z-index:0;
+	background-color: Transparent;
+	color: #88d1fa;
+	/*no highlight*/
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	user-select: none;
+	height: 80vh;
+	width: 65vw;
+}
+
+#lyricsEdit {
+	position: fixed;
+    display: block;
+    white-space: pre-wrap;
+    text-transform: uppercase;
+	overflow: auto; 
+	line-height: 160%;
+	border: none;
+	vertical-align: text-bottom;
+	resize: none;
+	height: 80vh;
+	width: 65vw;
+	outline:none;
+}
+
+#lyricsChordInput {
+    display: block;
+    white-space: pre-wrap;
+    text-transform: uppercase;
+	overflow: auto; 
+	padding-top: 17px;
+	line-height: 246%;
+	vertical-align: text-bottom;
+	resize: none;
+	cursor: crosshair;
+	position:relative;
+	z-index:2;
+	background-color: Transparent;
+	/*no highlight*/
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	user-select: none;
+	height: 80vh;
+	width: 65vw;
+}
+
+
+
+#contentDisplayDiv { 
+	padding-top: 1vh;
+	padding-left: 4vw; /*5.7-1.7*/
+	font-family: 'menloRegular';
+	color: rgba(0,0,0,0.87);
+	line-height: 20px;
+	border: none;
+	overflow-y:hidden;
+	opacity: 0.87;
+	font-size: 15px;
+	padding-bottom: 5vh;
+}
+
+/*other*/
+#addChordPopUp {
+
+}
+
+#chordInputField {/* for modal box*/
+	width: 100px;
+}
+
+#editModeInputBoxes_title {
+	padding: 0px;
+	border: 0.5px solid;
+    border-radius: 2px;
+    height: 31px;
+    background-color: Transparent;
+    /*width: 60%;*/
+    border: none;
+	resize: none;
+	outline:none;
+}
+
+#editModeInputBoxes_details {
+	padding: 0px;
+	border: 0.5px solid;
+    border-radius: 2px;
+    height: 16px;
+    background-color: Transparent;
+    border:none;
+    /*outline-width: 0;*/
+	resize: none;
+	outline:none;
+}
+
+
+
+
+@media screen and (min-width:800px){ /*this takes effect when window is above 1024, overrides specific attributes already defined ^ up there*/
+    #sidebar {
+        display:block;
+    }
+
+    #mainDisplay {
+    	left: 25vw;
+    	width: auto;
+    }
+    #sidebarToggle {
+    	visibility: hidden;
+    }
+
+}
+input[type="search"] {
+  -webkit-appearance: searchfield;
+}
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}

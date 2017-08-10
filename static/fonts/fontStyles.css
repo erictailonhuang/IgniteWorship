@@ -1,0 +1,27 @@
+@font-face {
+	font-family: 'menloRegular';
+	font-style: normal;
+	font-weight: normal;
+	src: url('Menlo-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'robotoMedium';
+ 	src: url('Roboto-Medium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'robotoRegular';
+ 	src: url('Roboto-Regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'robotoCondensed';
+ 	src: url('Roboto-Condensed-Regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
