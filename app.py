@@ -7,7 +7,7 @@ import time
 
 application = Flask(__name__)
 
-hostName = '0.0.0.0'
+hostName = "songclouddemo.herokuapp.com"
 portNo = 5000
 
 client = MongoClient('localhost:27017')
