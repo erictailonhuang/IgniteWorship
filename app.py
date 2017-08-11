@@ -1,23 +1,15 @@
 from pymongo import MongoClient
+from bson import ObjectId
 from flask import Flask,render_template,jsonify,json,request
 import util
 import traceback
-import os
 import time
+import config as cf
 
 application = Flask(__name__)
 
-hostName = '0.0.0.0'
-portNo = int(os.environ.get("PORT", 5000))
-
-DB_NAME = "heroku_9trbkmfx"
-DB_HOST = "ds161262.mlab.com"
-DB_PORT = 61262
-
-client = MongoClient(DB_HOST, DB_PORT)
-db = client[DB_NAME]
-
-
+client = MongoClient(cf.DB_HOST, cf.DB_PORT)
+songDB = client[cf.DB_NAME]
 
 @application.route("/addSong",methods=['POST'])
 def addSong():
@@ -401,5 +393,5 @@ def deleteSong():
 
 if __name__ == "__main__":
     application.debug = True
-    application.run(host=hostName, port=portNo)
+    application.run(host = cf.hostName, port = cf. portNo)
 
