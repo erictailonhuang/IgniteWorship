@@ -1,7 +1,5 @@
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 from flask import Flask,render_template,jsonify,json,request
-from fabric.api import *
 import util
 import traceback
 
@@ -9,8 +7,8 @@ import time
 
 application = Flask(__name__)
 
-hostName = 'https://songclouddemo.herokuapp.com/'
-portNo = 2000
+hostName = '0.0.0.0'
+portNo = 2001
 
 client = MongoClient('localhost:27017')
 songDB = client.SongData
