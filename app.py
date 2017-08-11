@@ -10,8 +10,15 @@ application = Flask(__name__)
 hostName = '0.0.0.0'
 portNo = int(os.environ.get("PORT", 5000))
 
-client = MongoClient('localhost:27017')
-songDB = client.app74598586
+DB_NAME = heroku_9trbkmfx  
+DB_HOST = ds161262.mlab.com
+DB_PORT = 61262
+DB_USER = ericthuang 
+DB_PASS = songcloud1234
+
+client = MongoClient(DB_HOST, DB_PORT)
+db = client[DB_NAME]
+db.authenticate(DB_USER, DB_PASS)
 
 
 
