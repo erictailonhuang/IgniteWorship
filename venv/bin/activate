@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/erichuang/Google Drive/Projects and Random Code/SongCloud/venv"
+VIRTUAL_ENV="/Users/erichuang/SongCloud/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

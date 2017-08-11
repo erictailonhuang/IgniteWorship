@@ -1,4 +1,4 @@
-#!/Users/erichuang/Google Drive/Projects and Random Code/SongCloud/venv/bin/python
+#!/Users/erichuang/SongCloud/venv/bin/python
 
 import sys
 import getopt
