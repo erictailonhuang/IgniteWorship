@@ -11,7 +11,8 @@ hostName = '0.0.0.0'
 portNo = int(os.environ.get("PORT", 5000))
 
 client = MongoClient('localhost:27017')
-songDB = client.SongData
+songDB = client.app74598586
+
 
 
 @application.route("/addSong",methods=['POST'])
