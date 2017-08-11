@@ -8,7 +8,7 @@ import time
 application = Flask(__name__)
 
 hostName = '0.0.0.0'
-portNo = 2001
+portNo = 5000
 
 client = MongoClient('localhost:27017')
 songDB = client.SongData
