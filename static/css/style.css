@@ -109,26 +109,33 @@ body {
 	border-color: #b0b0b0;
     border-radius: 1.5px;
     background: #FFFFFF;
-    width: 26.7vw;
+    width: 27vw;
     height: 5vh;
     border: 2px solid #DDDDDD;
     margin: auto;
     z-index: 100;
- 	display: table;
   	margin: 0 auto;
+  	vertical-align: middle;
 }
 #searchIcon {
-	padding: 10px;
+	padding-left: 12px;
+	padding-right: 8px;
+	/*margin: auto;*/
+	display: inline;
+	vertical-align: middle;
 }
 #searchBar {
 	border: 0px solid;
+	background-color: Transparent;
     height: 30px;
     width: 23vw;
     margin: auto;
     line-height: 20px;
     font-size: 15px;
     font-family: 'robotoRegular';
-    outline:none;
+    outline: none;
+    vertical-align: middle;
+    display: inline-block;
 }
 
 #padding{

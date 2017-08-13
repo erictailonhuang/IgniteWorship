@@ -3,14 +3,13 @@ from bson import ObjectId
 from flask import Flask,render_template,jsonify,json,request
 import util
 import traceback
-import time
 import config as cf
+import time
 
 application = Flask(__name__)
 
 client = MongoClient(cf.DB_HOST, cf.DB_PORT)
 songDB = client[cf.DB_NAME]
-songDB.authenticate(cf.DB_USER, cf.DB_PASS)
 
 @application.route("/addSong",methods=['POST'])
 def addSong():
@@ -36,17 +35,12 @@ def addSong():
             key = json_data['key']
         except:
             key = " "
-        try:
-            bpm = json_data['bpm']
-        except:
-            bpm = " "
 
         songID = songDB.Songs.insert_one({
             'songName':songName, 
             'artist':artist, 
             'key':key, 
             'author': author, 
-            'bpm': bpm, 
             'lyrics': {},
             'chords': {}, 
             'IDKEY': unqID})
@@ -56,16 +50,16 @@ def addSong():
         songID = str(song['_id'])
 
         try:
-            URL = "http://" + str(hostName) + ":" + str(portNo) +  "/" + str(song['IDKEY'])
+            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['IDKEY'])
         except:
-            URL = "url not available"
+            traceback.print_exc()
+            URL = "cannot generate URL"
 
         songDetail = {
                 'songName':songName,
                 'artist':artist,
                 'id':songID,
                 'key':key,
-                'bpm':bpm,
                 'displayedKey': key,
                 'URL': URL
                 }
@@ -127,7 +121,7 @@ def getSong():
         songID = str(song['_id'])
 
         try:
-            URL = "http://" + str(hostName) + ":" + str(portNo) +  "/" + str(song['IDKEY'])
+            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['IDKEY'])
         except:
             URL = "url not available"
 
@@ -248,6 +242,9 @@ def updateSong():
         # bpm = json_data['bpm']
 
         lyrics = util.lyricFormatToStore(json_data['lyrics'])
+        trimmedLyrics = ""
+        for i in lyrics.split("\n"):
+            trimmedLyrics += i.rstrip() + "\n"
 
         songDB.Songs.update_one({'_id':ObjectId(songID)},{'$set':{
             'songName':songName, 
@@ -255,7 +252,7 @@ def updateSong():
             'key':key, 
             # 'author': author, 
             # 'bpm': bpm, 
-            'lyrics': lyrics}})
+            'lyrics': trimmedLyrics}})
         return jsonify(status='OK',message='updated successfully')
     except Exception, e:
         print(str(e))
@@ -395,4 +392,3 @@ def deleteSong():
 if __name__ == "__main__":
     application.debug = True
     application.run(host = cf.hostName, port = cf. portNo)
-
