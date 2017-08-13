@@ -10,6 +10,7 @@ application = Flask(__name__)
 
 client = MongoClient(cf.DB_HOST, cf.DB_PORT)
 songDB = client[cf.DB_NAME]
+songDB.authenticate(cf.DB_USER, cf.DB_PASS)
 
 @application.route("/addSong",methods=['POST'])
 def addSong():
