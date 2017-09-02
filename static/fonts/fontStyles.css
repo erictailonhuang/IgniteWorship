@@ -25,3 +25,10 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'stint';
+    src: url('stintultracondensed-regular-webfont.woff') format('woff');    
+    font-weight: normal;
+    font-style: normal;
+}

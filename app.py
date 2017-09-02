@@ -18,50 +18,33 @@ def addSong():
     unqID = str(hex(int(round(time.time() * 1000)))).replace("0x", "")
 
     try:
-        json_data = request.json['info']
-        
-        try:
-            songName = json_data['songName']
-        except:
-            songName = " "
-        try:
-            artist = json_data['artist']
-        except:
-            artist = " "
-        try:
-            author = json_data['author']
-        except:
-            author = " "
-        try:
-            key = json_data['key']
-        except:
-            key = " "
-
         songID = songDB.Songs.insert_one({
-            'songName':songName, 
-            'artist':artist, 
-            'key':key, 
-            'author': author, 
-            'lyrics': {},
+            'songName': "",
+            'artist': "",
+            'lyrics': "",
+            'key': "G",
             'chords': {}, 
-            'IDKEY': unqID})
+            'URLKEY': unqID})
 
-        song = songDB.Songs.find_one({'IDKEY':unqID})
+        #get it back
+        song = songDB.Songs.find_one({'URLKEY':unqID})
 
         songID = str(song['_id'])
 
         try:
-            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['IDKEY'])
+            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['URLKEY'])
         except:
             traceback.print_exc()
             URL = "cannot generate URL"
 
         songDetail = {
-                'songName':songName,
-                'artist':artist,
+                'songName': "",
+                'artist': "",
+                'lyrics': "",
+                'chords': {}, 
                 'id':songID,
-                'key':key,
-                'displayedKey': key,
+                'key': "G",
+                'displayedKey': "G",
                 'URL': URL
                 }
         return json.dumps(songDetail)
@@ -105,10 +88,6 @@ def getSong():
             desiredKey = key
 
         try:
-            bpm = song['bpm']
-        except:
-            bpm = " "
-        try:
             lyrics = util.getPrettified_Lyrics(song['lyrics'])
         except:
             lyrics = ""
@@ -117,21 +96,23 @@ def getSong():
         try:
             chords = util.getPrettified_Chords(song['chords'], linesCount , key, desiredKey)
         except:
-            chords = (util.pad(" ", 64) * linesCount)
-
-        songID = str(song['_id'])
+            chords = (util.pad(" ", util.chordWidth) * linesCount)
 
         try:
-            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['IDKEY'])
+            songID = str(song['_id'])
         except:
-            URL = "url not available"
+            songID = None
+
+        try:
+            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['URLKEY'])
+        except:
+            URL = ""
 
         songDetail = {
                 'songName':songName,
                 'artist':artist,
                 'id':songID,
                 'key':key,
-                'bpm':bpm,
                 'displayedKey': desiredKey, 
                 'author':author,
                 'lyrics':lyrics,
@@ -144,11 +125,11 @@ def getSong():
         traceback.print_exc()
         return str(e)
 
-@application.route('/<IDKEY>')
-def getSongByID(IDKEY):
+@application.route('/<URLKEY>')
+def getSongByID(URLKEY):
     #future: retrieve song specified key, default if not specified
     try:
-        song = songDB.Songs.find_one({'IDKEY': IDKEY})
+        song = songDB.Songs.find_one({'URLKEY': URLKEY})
 
         try:
             songName = song['songName']
@@ -173,10 +154,6 @@ def getSongByID(IDKEY):
             desiredKey = key
 
         try:
-            bpm = song['bpm']
-        except:
-            bpm = " "
-        try:
             lyrics = util.getPrettified_Lyrics(song['lyrics'])
         except:
             lyrics = ""
@@ -185,12 +162,15 @@ def getSongByID(IDKEY):
         try:
             chords = util.getPrettified_Chords(song['chords'], linesCount , key, desiredKey)
         except:
-            chords = (util.pad(" ", 64) * linesCount)
-
-        songID = str(song['_id'])
+            chords = (util.pad(" ", util.chordWidth) * linesCount)
 
         try:
-            URL = "http://" + str(hostName) + ":" + str(portNo) +  "/" + str(song['IDKEY'])
+            songID = str(song['_id'])
+        except:
+            songID = None
+        
+        try:
+            URL = "http://" + str(hostName) + ":" + str(portNo) +  "/" + str(song['URLKEY'])
         except:
             URL = " "
 
@@ -199,7 +179,6 @@ def getSongByID(IDKEY):
                 'artist':artist,
                 'id':songID,
                 'key':key,
-                'bpm':bpm,
                 'displayedKey': desiredKey, 
                 'author':author,
                 'lyrics':lyrics,
@@ -238,22 +217,26 @@ def updateSong():
 
         songName = json_data['songName']
         artist = json_data['artist']
-        # author = json_data['author']
         key = json_data['key']
-        # bpm = json_data['bpm']
 
         lyrics = util.lyricFormatToStore(json_data['lyrics'])
-        trimmedLyrics = ""
-        for i in lyrics.split("\n"):
-            trimmedLyrics += i.rstrip() + "\n"
+        if (len(lyrics.rstrip()) == 0):
+            lyrics = ""
+        # trimmedLyrics = ""
+        # for i in lyrics.split("\n"):
+        #     trimmedLyrics += i.rstrip() + "\n"
 
-        songDB.Songs.update_one({'_id':ObjectId(songID)},{'$set':{
-            'songName':songName, 
-            'artist':artist, 
-            'key':key, 
-            # 'author': author, 
-            # 'bpm': bpm, 
-            'lyrics': trimmedLyrics}})
+        #delete if empty, otherwise update
+        if (len(songName.strip()) == 0 and len(artist.strip()) == 0 and len(lyrics.strip()) == 0):
+            songDB.Songs.delete_one({'_id':ObjectId(songID)})
+            print("deleted empty song")
+        else:
+            songDB.Songs.update_one({'_id':ObjectId(songID)},{'$set':{
+                'songName':songName, 
+                'artist':artist, 
+                'key':key, 
+                'lyrics': lyrics}})
+            print("updated song")
         return jsonify(status='OK',message='updated successfully')
     except Exception, e:
         print(str(e))
@@ -316,6 +299,21 @@ def removeChord():
         chords.pop(str(position), None)
 
         # remove this chord from db
+
+
+
+
+
+
+        #remove just one index instead of updating and reading entire thing
+
+
+
+
+
+
+
+
         songDB.Songs.update_one({'_id':ObjectId(songID)}, {"$set": {"chords": chords}});
         
     except Exception, e:
@@ -332,23 +330,25 @@ def putChord():
         songID = json_data['songID']
         position = int(json_data['position'].replace("char", "").strip()) - 1 #cuz it starts at 1
         
-        #identify key someday
         chord = json_data['chord']
 
         song = songDB.Songs.find_one({'_id':ObjectId(songID)})
-        try:
-            chords = song['chords']
-        except: #reinitialize to empty
-            chords = list()
+        # try:
+        #     chords = song['chords']
+        # except: #reinitialize to empty
+        #     chords = list()
 
 
 
         # // make sure index + len(chordword) is free
-
+        
 
         # push to db
-        chordData = [position, key, chord] #store as list of data
-        songDB.Songs.update_one({'_id':ObjectId(songID)}, {"$set": {'chords.' + str(position): chord}});
+        # chordData = [position, key, chord] #store as list of data
+
+        # print(chordData)
+        
+        songDB.Songs.update_one({'_id':ObjectId(songID)}, {"$set": {"chords." + str(position): str(chord)}});
 
         return jsonify(status='OK',message='chord inserted successfully')
     except Exception, e:

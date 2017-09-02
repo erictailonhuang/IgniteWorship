@@ -58,7 +58,39 @@ body {
     display: table;
 }
 
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+/* style glyph */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 12px;
+  pointer-events: none;
+}
+/* align glyph */
+.left-addon .glyphicon  { left: 1.5%;}
+/* add padding  */
+.left-addon input  { padding-left:  40px; }
+
+
+
 /*sidebar*/
+
+#sidebar_tablet {
+	width: 25vw;
+	height: 100vh;
+	max-height: 100vh;
+	position: fixed;
+	border-right: 1px solid;
+	border-color: #dddddd;
+	background-color: #fafafa;
+	display:none;
+	transition: 0.2s;
+	margin: auto;
+	z-index: 200;
+}
+
 #sidebar {
 	width: 30.2vw;
 	height: 100vh;
@@ -105,30 +137,25 @@ body {
 }
 
 #searchDiv { /*outer box*/
-	background-color: Transparent;
-	border-color: #b0b0b0;
-    border-radius: 1.5px;
-    background: #FFFFFF;
-    width: 27vw;
-    height: 5vh;
-    border: 2px solid #DDDDDD;
-    margin: auto;
-    z-index: 100;
-  	margin: 0 auto;
-  	vertical-align: middle;
+
 }
 #searchIcon {
 	padding-left: 12px;
 	padding-right: 8px;
+	color:#b0b0b0;
+	font-size: 16;
 	/*margin: auto;*/
 	display: inline;
 	vertical-align: middle;
 }
 #searchBar {
-	border: 0px solid;
-	background-color: Transparent;
-    height: 30px;
-    width: 23vw;
+
+	box-shadow: inset 0px 0px 0px 0px;
+	border: 1.5px solid #DDDDDD;
+	border-radius: 0px;
+	background: #FFFFFF;
+    height: 5vh;
+    width: 26.7vw;
     margin: auto;
     line-height: 20px;
     font-size: 15px;
@@ -137,17 +164,22 @@ body {
     vertical-align: middle;
     display: inline-block;
 }
-
+#searchBar:focus{
+	box-shadow: inset 0px 0px 0px 0px;
+	border: 1.5px solid #37B0E8;
+}
 #padding{
 	height: 1vh;
 }
 
 #songList {
+	width: 26.7vw;
 	font-size: 14px;
 	color: #000000;
 	height: 100%;
 	overflow-y: scroll;
 	padding-bottom: 1vh;
+
 }
 .selected {
 	background-color: #daecf6;
@@ -155,51 +187,179 @@ body {
 
 #songitem {
 	width: 26.7vw;
+	height: 5.3vh;
 	box-shadow: inset 0 -1px 0 0 #DDDDDD;
 	font-family: 'robotoRegular';
 	opacity: 0.87;
 	border: 0.25px;
-	line-height: 42px;
+	line-height: 40px;
 	padding-left: 1.3vw;
+}
+#songitem:hover {
+	background: #F3F3F3;
 }
 
 /*tool bar*/
-#toolbar {
-	z-index: 1;
-	/*overflow: visible;*/
-	height: 5%;
+#toolbar_Row {
+	border-top: 0px solid;
+	border-bottom: 1px solid;
+	border-color: #dddddd;
+	vertical-align: middle;
+	padding: 0px;
+	height: 40px;
+	width: 100vw;
+	float: right;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
-#clearSong {
-    padding: 3px;
-    float: right;
+#toolbar_separator{
+	font-size: 24px;
+	align: center;
+	vertical-align: middle;
+	align: center;
+	color: #DDDDDD;
+	opacity: 0.80;
+	font-family: 'stint';
+	padding: 0px;
+	width: 1px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-#ddMenu {
-	z-index: 999;
-	left: 20vh;
-	font-size: 8pt;
-	padding: 5px;
+#toolbar_td_sidebarToggle {
+	vertical-align: middle;
+	align: left;
+	font-family: 'robotoRegular';
+	font-size: 17px;
+	color:#adadad;
+	padding-left:20px;
+	padding-right: 10px;
+	cursor:pointer; 
+	align: left;
+	/*width: 56px;*/
+}
+#toolbar_td_autosave{
+	vertical-align: middle;
+	align: right;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+	align: right;
+	vertical-align: middle;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+	/*width: 100px;*/
+	color: #37B0E8;
+	font-family: 'robotoMedium';
+}
+#toolbar_td_keySelect {
+	vertical-align: middle;
+	align: right;
+	font-family: 'robotoRegular';
+	font-size: 17px;
+	color: #37B0E8;
+	padding-left: 10px;
+	/*padding-right: 10px;*/
+	padding: 0px;
+	width: 100px;
+	cursor:pointer; 
+}
+
+#toolbar_td_textToggle {
+	vertical-align: middle;
+	align: right;
+	font-family: 'robotoMedium';
+	font-size: 10px;
+	line-height: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+	cursor:pointer;
+	color:#adadad;
+	/*width: 10px;*/
+}
+#toolbar_td_deleteSongButton {
+	vertical-align: middle;
+	align: right;
+	font-family: 'robotoRegular';
+	font-size: 17px;
+	color:#adadad;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+	cursor:pointer; 
+	/*width: 10px;*/
+}
+#toolbar_td_editMode {
+	vertical-align: middle;
+	align: right;
+	font-family: 'robotoRegular';
+	font-size: 17px;
+	color: #37B0E8;
+	padding: 0px;
+	padding-left: 10px;
+	padding-right: 20px;
+	/*width: 56px;*/
+	cursor:pointer; 
 }
 
 #keySelectButton {
-	background-color: #37B0E8;
-	padding-top: 3px;
+	align: right;
+	width: 100px;
+	z-index: 999;
+	padding: 0px;
+	background-color: Transparent;
+	font-family: 'robotoRegular';
+	font-size: 13px;
+	opacity: 0.54;
+	border: 0px solid;
+	color: rgba(0,0,0,0.87);
+	outline:none;
+	vertical-align: middle;
+	cursor:pointer; 
+}
+#keySelectButton:focus{
+	opacity: 1;
 }
 
-#toolbarContent {
-	/*float:right;*/
-	/*border-left: 1px solid;*/
+#dropdownList {
+	border-color: #b0b0b0;
+    margin: auto;
+    width: 100px;
+    z-index: 100;
+    background: #FFFFFF;
+	border: 1px solid #EEEEEE;
+	box-shadow: 0 2px 7px 0 rgba(0,0,0,0.12);
+	border-radius: 2px;
+	line-height: 32px;
+	vertical-align: middle;
 }
 
-#toolbarTable {
-	border-bottom: 0.5px solid;
-	border-color: #dddddd;
+#dropDownList_item {
+	opacity: 0.87;
+	font-family: 'robotoRegular';
+	font-size: 13px;
+	color: #000000;
+	vertical-align: middle;
+	line-height: 32px;
+	width: 100px;
+}
+#dropDownList_item.hover {
+	color: rgba(55,176,232,0.16);
 }
 
 #sidebarToggle {
 	visibility: visible; /*this div is holding the toolbar height and is crappy design*/
 	height: 20px;
+	font-size: 15px;
+	padding-left: 14px;
+	padding-right: 16px;
+	vertical-align: middle;
+	padding-top: 4px;
+	/*padding-bottom: 8px;*/
 }
 
 #saveButton {
@@ -209,12 +369,7 @@ body {
 	letter-spacing: 0.5px;
 }
 
-#autoSavingFlashingText {
-	color: #37B0E8;
-}
-
 /*main display*/
-
 #mainDisplay {
 	z-index: -5;
 	/*width: 100vw;*/
@@ -226,6 +381,7 @@ body {
 	padding-top:30px;
     height: auto;
     width : auto;
+    overflow-x: hidden;
 }
 
 #songTitleDisplay {
@@ -257,6 +413,7 @@ body {
 
 #urlHeader {
     float: right;
+    font-size:9.5pt;
 }
 
 #txtboxBPM {
@@ -264,13 +421,26 @@ body {
     padding: 15px;
 }
 
+#contentDisplayDiv { 
+	padding-top: 1vh;
+	padding-left: 4vw; /*5.7-1.7*/
+	font-family: 'menloRegular';
+	color: rgba(0,0,0,0.87);
+	line-height: 20px;
+	border: none;
+	overflow-y:hidden;
+	opacity: 0.87;
+	font-size: 15px;
+	padding-bottom: 5vh;
+}
+
 #lyricsDisplay {
     display: block;
     padding-top: 17px;
     white-space: pre-wrap; /*WHY NOT WORKING*/
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 	overflow: auto; 
-	line-height: 246%;
+	line-height: 40px;
 	vertical-align: text-bottom;
 	resize: none;
 	position:relative;
@@ -284,9 +454,9 @@ body {
 
     display: block;
     white-space: pre-wrap; /*WHY NOT WORKING*/
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 	overflow: auto; 
-	line-height: 150%;
+	line-height: 20px;
 	vertical-align: text-bottom;
 	font-size: 11pt;
 	resize: none;
@@ -301,7 +471,7 @@ body {
     white-space: pre-wrap;
     position:absolute;
 	overflow: auto; 
-	line-height: 246%;
+	line-height: 40px;
 	vertical-align: text-bottom;
 	z-index:0;
 	background-color: Transparent;
@@ -319,9 +489,9 @@ body {
 	position: fixed;
     display: block;
     white-space: pre-wrap;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 	overflow: auto; 
-	line-height: 160%;
+	line-height: 20px;
 	border: none;
 	vertical-align: text-bottom;
 	resize: none;
@@ -333,14 +503,15 @@ body {
 #lyricsChordInput {
     display: block;
     white-space: pre-wrap;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 	overflow: auto; 
 	padding-top: 17px;
-	line-height: 246%;
+	line-height: 40px;
 	vertical-align: text-bottom;
 	resize: none;
 	cursor: crosshair;
 	position:relative;
+	color: #adadad;
 	z-index:2;
 	background-color: Transparent;
 	/*no highlight*/
@@ -352,24 +523,8 @@ body {
 	width: 65vw;
 }
 
-
-
-#contentDisplayDiv { 
-	padding-top: 1vh;
-	padding-left: 4vw; /*5.7-1.7*/
-	font-family: 'menloRegular';
-	color: rgba(0,0,0,0.87);
-	line-height: 20px;
-	border: none;
-	overflow-y:hidden;
-	opacity: 0.87;
-	font-size: 15px;
-	padding-bottom: 5vh;
-}
-
 /*other*/
 #addChordPopUp {
-
 }
 
 #chordInputField {/* for modal box*/
@@ -398,10 +553,8 @@ body {
     /*outline-width: 0;*/
 	resize: none;
 	outline:none;
+	font-size:10pt;
 }
-
-
-
 
 @media screen and (min-width:800px){ /*this takes effect when window is above 1024, overrides specific attributes already defined ^ up there*/
     #sidebar {

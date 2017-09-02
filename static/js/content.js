@@ -14,7 +14,7 @@ angular.module('myApp', [])
         };
     })
     // .controller('HomeCtrl', ['$scope', '$http', '$timeout', '$window', '$routeParams', function($scope, $http, $timeout, $window, $routeParams) {
-    .controller('HomeCtrl', ['$scope', '$http', '$timeout', '$window', function($scope, $http, $timeout, $window) {
+    .controller('HomeCtrl', ['$scope', '$http', '$timeout', '$window', function($scope, $http, $timeout, $window, $routeProvider) {
         var scope = $scope;
         // var routeParams = $routeParams;
         
@@ -91,13 +91,6 @@ angular.module('myApp', [])
             $scope.idSelected = idSelected;
         };  
 
-        $scope.openSidebar = function() {
-            document.getElementById("sidebar").style.width = "20vw";
-        };
-        $scope.closeSidebar = function() {
-            document.getElementById("sidebar").style.width = "0";
-        };
-
         $scope.pullSongListUpdate = function(){
             $http({
                 method: 'POST',
@@ -143,7 +136,7 @@ angular.module('myApp', [])
                 $scope.setSelected($scope.currentSong.id);
                 $scope.selectedKey = $scope.currentSong.key;
                 $scope.showMainSongDiv = true;
-                // $scope.chordEditMode = true;
+                $scope.editModeOn();
             }, function(error) {
                 console.log(error);
             });
@@ -166,15 +159,27 @@ angular.module('myApp', [])
             $scope.searchFocus = false;
         }
 
+        $scope.toggleEditMode = function() {
+            if ($scope.editMode) {
+                $scope.editModeOff();
+            }
+            else {
+                $scope.editModeOn();
+            }
+        }
+
         $scope.editModeOn = function() {
             $scope.editMode = true;
             $scope.lyricsOnlyMode = false;
         };
 
         $scope.editModeOff = function() {
-            $scope.chordEditMode = false;
-            $scope.dontMessStuffUpOnTheWayOut();
-            $scope.showSong($scope.currentSong.id);
+            if ($scope.currentSong.songName.trim() != "") { //must have title before saving
+                $scope.chordEditMode = false;
+                $scope.dontMessStuffUpOnTheWayOut();
+                $scope.showSong($scope.currentSong.id);
+            }
+            
         };
 
         $scope.chordEditModeOn = function() {
@@ -316,8 +321,6 @@ angular.module('myApp', [])
         $scope.clearSongDisplay = function(){
             $scope.dontMessStuffUpOnTheWayOut();
             $scope.showMainSongDiv = false;
-            $scope.chordEditMode = false;
-            $scope.editMode = false;
         };
         
         $scope.showSong = function(id){
@@ -465,7 +468,7 @@ angular.module('myApp', [])
 
         // autosave
         window.setInterval(function(){
-            if ($scope.editMode && !$scope.chordEditMode){
+            if ($scope.editMode && !$scope.chordEditMode && $scope.currentSong.songName.trim() != ""){
                 $scope.showAutosaveMessage = true;
                 $scope.updateSongWithNewEdits();
                 $timeout(function () {
