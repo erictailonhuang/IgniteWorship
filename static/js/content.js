@@ -215,6 +215,11 @@ angular.module('myApp', [])
             $scope.checkAndRemoveOrAddChord($scope.chordToAdd_spanNo);
         };
 
+        scope.showAddChordPopUp = function(){
+            $('#addChordPopUp').modal('show')
+            $scope.showAddChord = true;
+        };
+
         scope.removeChord = function() {
             var removeChordRequest = 
             {
@@ -233,11 +238,6 @@ angular.module('myApp', [])
             });
 
             $scope.refreshChords();
-        };
-
-        scope.showAddChordPopUp = function(){
-            $('#addChordPopUp').modal('show')
-            $scope.showAddChord = true;
         };
 
         $scope.addChord = function() {
@@ -267,8 +267,9 @@ angular.module('myApp', [])
             });
             $scope.chordToAdd_chord = "";
             $scope.showAddChord = false;
-
+            
             $scope.refreshChords();
+
         };     
 
         $scope.refreshChords = function() {
@@ -308,7 +309,10 @@ angular.module('myApp', [])
             }, function(error) {
                 console.log(error);
             });
-            $scope.refreshChords(); //reduntant
+
+            setTimeout(function(){
+                $scope.refreshChords();
+            }, 500);
         };
 
         $scope.updateSongWithNewEdits = function(){
