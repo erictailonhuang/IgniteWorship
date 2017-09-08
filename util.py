@@ -186,7 +186,7 @@ def getChordInKey(chord, keyOrigin = "NNS", keyTarget = "NNS"):
 
 	#not presence of important chord modifiers
 	containsSharp = '#' in str(chord)
-	containsFlat = "flat" in str(chord).lower()
+	containsFlat = "b" in str(chord)[1:].lower()
 	#other modifiers
 	containsMinor = "m" in str(chord).lower().replace("dim", "") or "min" in str(chord).lower().replace("dim", "")
 	# remove maj
