@@ -312,7 +312,7 @@ angular.module('myApp', [])
 
             setTimeout(function(){
                 $scope.refreshChords();
-            }, 500);
+            }, 350);
         };
 
         $scope.updateSongWithNewEdits = function(){
