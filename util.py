@@ -46,7 +46,7 @@ def lyricFormatToStore(lyrics):
 				tempLine = "" #clear buffer	
 
 			else: #if line length isnt greater than lyricWidth
-				lyricContent.append(pad(curLine, lyricWidth))
+				lyricContent.append(pad(curLine, lyricWidth, False))
 
 	return("\n".join(lyricContent))
 
@@ -67,8 +67,10 @@ def pad(line, padLen, trimLeft = True):
 #assemble lyrics from db data
 def getPrettified_Lyrics(lyricContent):
 	printSong = ""
-	for line in lyricContent:
-		printSong += line
+	for line in lyricContent.split("\n"):
+		print line
+		printSong += pad(line, lyricWidth, False) + "\n"
+
 	return printSong
 
 #assemble chords from db data
