@@ -87,10 +87,10 @@ def getSong():
         except:
             desiredKey = key
 
-        try:
-            lyrics = util.getPrettified_Lyrics(song['lyrics'])
-        except:
-            lyrics = ""
+        # try:
+        lyrics = util.getPrettified_Lyrics(song['lyrics'])
+        # except:
+            # lyrics = ""
 
         linesCount = len(lyrics.split('\n')) - 1
         try:
