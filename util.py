@@ -212,10 +212,12 @@ def getChordInKey(chord, keyOrigin = "NNS", keyTarget = "NNS"):
 		suffix = suffix.replace("m", "")
 		suffix = "m" + suffix #move to front of suffix
 	if containsSharp:
-		suffix = "#" + suffix #move to prefix
+		# suffix = "#" + suffix #move to prefix
+		prefix = prefix + "#"
 	if containsFlat:
 		suffix = suffix.replace("b", "")
-		suffix = "b" + suffix #move to prefix
+		# suffix = "b" + suffix #move to prefix
+		prefix = prefix + "b"
 
 
 	#transpose prefix
@@ -233,10 +235,12 @@ def getChordInKey(chord, keyOrigin = "NNS", keyTarget = "NNS"):
 
 
 def transpose(baseChord, keyOrigin, keyTarget):
-	#when using a flat key, use 'flat', otherwise use '#' i.e. Fflat key, use flats
+	#when using a flat key, use 'b', otherwise use '#' i.e. Fb key, use flats
 	flatTargetKey = False
 	if ("b" in keyTarget[1:]):
 		flatTargetKey = True
+
+	# print baseChord
 
 	if keyOrigin != "NNS": #if source is not NNS
 		#get diff
