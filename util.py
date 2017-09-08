@@ -1,7 +1,7 @@
 import traceback
 
-lyricWidth = 60 #line width
-chordWidth = 69 #line width
+lyricWidth = 70 #line width
+chordWidth = 80 #line width
 
 #pad out new lyrics and chords to a determined text width (using spaces)
 def lyricFormatToStore(lyrics):
@@ -80,7 +80,7 @@ def getPrettified_Chords(chordContent, linesCount, originalKey, desiredKey):
 		# generate blank chord lines
 		printChords = ((pad(" ", chordWidth, False) + "\n") * (linesCount+2)).split('\n') #one extra line to pad
 
-		if len(chordContent) == 0:
+		if chordContent == None or len(chordContent) == 0:
 			return (pad(" ", chordWidth, False))
 
 		expandedChordData = list() #stored as [row, col, chord]
@@ -99,7 +99,7 @@ def getPrettified_Chords(chordContent, linesCount, originalKey, desiredKey):
 					chord = str(getChordInKey(chordDatum[2], originalKey, desiredKey))
 				except Exception, d:
 					traceback.print_exc()
-					chord = "err0"
+					chord = "invld0"
 
 				#get line of interest
 				cLine = printChords[row]
@@ -155,9 +155,9 @@ def getChordInKey(chord, keyOrigin = "NNS", keyTarget = "NNS"):
 	# if (keyOrigin == keyTarget):
 	# 	return str(chord)
 
-	#if target key is NNS, return err (we only transpose out of NNS, not into)
+	#if target key is NNS, return invld (we only transpose out of NNS, not into)
 	if (keyTarget == "NNS"):
-		return "err1"
+		return "invld1"
 
 	chord = str(chord)
 	keyOrigin = str(keyOrigin)
@@ -172,63 +172,61 @@ def getChordInKey(chord, keyOrigin = "NNS", keyTarget = "NNS"):
 		result_A = getChordInKey(chordA, keyOrigin, keyTarget)
 		result_B = getChordInKey(chordB, keyOrigin, keyTarget)
 
-		if ("err" not in result_A and "err" not in result_B):
+		if ("invld" not in result_A and "invld" not in result_B):
 			#reassemble
 			return(result_A + "/" + result_B)
 		else:
-			return("err2")
+			return("invld2")
 
 	#make sure first char is valid
 	possibleFirstChar = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f', 'G', 'g', '1', '2', '3', '4', '5', '6', '7']
 	if (chord[0] not in possibleFirstChar): #if its not a valid first char
-		return(err)
+		return(invld)
 
 	#not presence of important chord modifiers
 	containsSharp = '#' in str(chord)
 	containsFlat = "flat" in str(chord).lower()
 	#other modifiers
-	containsMinor = "m" in str(chord).lower() or "min" in str(chord).lower()
+	containsMinor = "m" in str(chord).lower().replace("dim", "") or "min" in str(chord).lower().replace("dim", "")
 	# remove maj
 	chord = str(chord).replace("maj", "")
 	chord = str(chord).replace("MAJ", "")
 
 	#if illegal
 	if (containsSharp and containsFlat):
-		return("err3")
+		return("invld3")
 
 	#get leading chord element
 	prefix = ""
 	if (keyOrigin == "NNS"): #validate that key is NNS when accepting NNS chords
 		if (not isInt(chord[0])):
-			return("err4")
+			return("invld4")
 		prefix = str(chord[0])
 	else: #if not nns
 		prefix = str(chord[0]).upper()
 
 	#put things in order
-	suffix = chord.replace(prefix, "").lower() #remove prefix from suffix
-	if containsSharp:
-		suffix = suffix.replace("#", "")
-		prefix = prefix + "#" #move to prefix
-	if containsFlat:
-		suffix = suffix.replace("flat", "")
-		suffix = suffix.replace("b", "")
-		prefix = prefix + "b" #move to prefix
+	suffix = chord.replace(prefix, "").replace("b", "").replace("#", "").lower() #remove prefix from suffix
 	if containsMinor:
-		suffix = suffix.replace("min", "")
 		suffix = suffix.replace("m", "")
 		suffix = "m" + suffix #move to front of suffix
+	if containsSharp:
+		suffix = "#" + suffix #move to prefix
+	if containsFlat:
+		suffix = suffix.replace("b", "")
+		suffix = "b" + suffix #move to prefix
+
 
 	#transpose prefix
 	prefix = transpose(prefix, keyOrigin, keyTarget)
 
-	if "err" in prefix:
+	if "invld" in prefix:
 		return prefix
 
 	#assemble
 	fullChord = prefix + suffix.lower()
 	if (len(fullChord) > 9):
-		return("err6")
+		return("invld6")
 
 	return(fullChord)
 
@@ -252,7 +250,7 @@ def transpose(baseChord, keyOrigin, keyTarget):
 				halfStepDiffCount = i - startIndex
 				break
 		if startIndex == -1:
-			return("err7")
+			return("invld7")
 
 		#get chord location
 		chordIndex = -1
@@ -261,7 +259,7 @@ def transpose(baseChord, keyOrigin, keyTarget):
 				chordIndex = i
 				break
 		if chordIndex == -1:
-			return("err8")
+			return("invld8")
 
 		possibleTargetChords = halfStepMatrix[(chordIndex + halfStepDiffCount) % len(halfStepMatrix)] #get list of chords (2 max)
 
@@ -272,7 +270,7 @@ def transpose(baseChord, keyOrigin, keyTarget):
 			if keyTarget in halfStepMatrix[i]:
 				rootIndex = i
 		if rootIndex == -1:
-			return("err9")
+			return("invld9")
 
 		stepsFromRoot = int(baseChord[0]) #steps in NNSstepsToNext
 		halfStepsFromRoot = 0

@@ -291,6 +291,8 @@ def removeChord():
     try:
         json_data = request.json['info']
         songID = json_data['songID']
+
+        #get song
         song = songDB.Songs.find_one({'_id':ObjectId(songID)})
         chords = song['chords']
 
@@ -326,7 +328,6 @@ def putChord():
     try:
         json_data = request.json['info']
 
-        key = json_data['key']
         songID = json_data['songID']
         position = int(json_data['position'].replace("char", "").strip()) - 1 #cuz it starts at 1
         

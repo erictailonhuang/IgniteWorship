@@ -247,7 +247,6 @@ angular.module('myApp', [])
 
             var chordRequest = 
             {
-                'key': $scope.chordToAdd_key,
                 'position': $scope.chordToAdd_spanNo,
                 'songID': $scope.chordToAdd_songid,
                 'chord': $scope.chordToAdd_chord

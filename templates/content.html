@@ -103,13 +103,20 @@
                 <!-- sidebar toggle -->
                 <td id="toolbar_td_sidebarToggle" ng-show="showMainSongDiv">
                     <span id="sidebarToggle" ng-click="openSidebar()" class="glyphicon glyphicon-menu-hamburger"  aria-hidden="true"></span>
+
+                    <!-- <a href="/" id="title">SONGCLOUD</a> -->
+                    <!-- ng-click="showAddPopUp()"  -->
+<!--                     <button ng-click="addSong()" id="addNewSongBtn">
+                        <span class="glyphicon glyphicon-plus" style="font-size: 15px"></span> NEW
+                    </button> -->
+                </td>
                 </td>
                 <!-- separator -->
                 <td id="toolbar_separator" ng-show="showMainSongDiv">|</td>
                 <!-- key select button during normal view mode-->
                 <td id="toolbar_td_keySelect" ng-show="showMainSongDiv">
                     <div class="dropdown">
-                        <button type="button" id="keySelectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-if="showMainSongDiv">
+                        <button id="keySelectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-if="showMainSongDiv">
                             <span style="text-align:left; padding: 0px;">
                                 Key: {{'{{selectedKey}}'}}
                                 <span style="float:right; font-size:10px; padding-top: 4px; padding-bottom: 0px; padding-right: 18px; vertical-align: middle;" class="glyphicon glyphicon-triangle-bottom"></span>
@@ -154,6 +161,11 @@
                 <!-- sidebar toggle -->
                 <td id="toolbar_td_sidebarToggle">
                     <span id="sidebarToggle" ng-click="openSidebar()" class="glyphicon glyphicon-menu-hamburger"  aria-hidden="true"></span>
+                    <a href="/" id="title">SONGCLOUD</a>
+                    <!-- ng-click="showAddPopUp()"  -->
+                    <button ng-click="addSong()" id="addNewSongBtn">
+                        <span class="glyphicon glyphicon-plus" style="font-size: 15px"></span> NEW
+                    </button>
                 </td>
                 <!-- autosave notification -->
                 <td id="toolbar_td_autosave" ng-hide="chordEditMode">
