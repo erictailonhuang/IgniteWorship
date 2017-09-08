@@ -68,7 +68,6 @@ def pad(line, padLen, trimLeft = True):
 def getPrettified_Lyrics(lyricContent):
 	printSong = ""
 	for line in lyricContent.split("\n"):
-		print line
 		printSong += pad(line, lyricWidth, False) + "\n"
 
 	return printSong
