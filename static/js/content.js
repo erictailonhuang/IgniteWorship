@@ -232,7 +232,7 @@ angular.module('myApp', [])
                 console.log(error);
             });
 
-            $scope.refreshSongDisplay();
+            $scope.refreshChords();
         };
 
         scope.showAddChordPopUp = function(){
@@ -268,8 +268,21 @@ angular.module('myApp', [])
             $scope.chordToAdd_chord = "";
             $scope.showAddChord = false;
 
-            $scope.refreshSongDisplay();
+            $scope.refreshChords();
         };     
+
+        $scope.refreshChords = function() {
+            $http({
+                method: 'POST',
+                url: '/getChords',
+                data: {'songID': $scope.chordToAdd_songid}
+            }).then(function(response) {
+                console.log("display dis song", response);
+                $scope.currentSong.chords = response.data.chords;
+            }, function(error) {
+                console.log(error);
+            });
+        };
 
         $scope.checkAndRemoveOrAddChord = function(position) {
             $http({
@@ -295,6 +308,7 @@ angular.module('myApp', [])
             }, function(error) {
                 console.log(error);
             });
+            $scope.refreshChords(); //reduntant
         };
 
         $scope.updateSongWithNewEdits = function(){

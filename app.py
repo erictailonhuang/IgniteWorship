@@ -87,10 +87,10 @@ def getSong():
         except:
             desiredKey = key
 
-        # try:
-        lyrics = util.getPrettified_Lyrics(song['lyrics'])
-        # except:
-            # lyrics = ""
+        try:
+            lyrics = util.getPrettified_Lyrics(song['lyrics'])
+        except:
+            lyrics = ""
 
         linesCount = len(lyrics.split('\n')) - 1
         try:
@@ -168,11 +168,11 @@ def getSongByID(URLKEY):
             songID = str(song['_id'])
         except:
             songID = None
-        
+
         try:
-            URL = "http://" + str(hostName) + ":" + str(portNo) +  "/" + str(song['URLKEY'])
+            URL = "http://" + str(cf.hostName) + ":" + str(cf.portNo) +  "/" + str(song['URLKEY'])
         except:
-            URL = " "
+            URL = ""
 
         songDetail = {
                 'songName':songName,
@@ -222,9 +222,10 @@ def updateSong():
         lyrics = util.lyricFormatToStore(json_data['lyrics'])
         if (len(lyrics.rstrip()) == 0):
             lyrics = ""
-        # trimmedLyrics = ""
-        # for i in lyrics.split("\n"):
-        #     trimmedLyrics += i.rstrip() + "\n"
+        trimmedLyrics = ""
+        for i in lyrics.split("\n"):
+            trimmedLyrics += i.rstrip() + "\n"
+        lyrics = trimmedLyrics
 
         #delete if empty, otherwise update
         if (len(songName.strip()) == 0 and len(artist.strip()) == 0 and len(lyrics.strip()) == 0):
@@ -322,6 +323,39 @@ def removeChord():
         traceback.print_exc()
         return jsonify(status='ERROR',message=str(e)) 
     return jsonify(status='OK',message='chord removed successfully')
+
+@application.route('/getChords', methods=['POST'])
+def getChords():
+    try:
+        songID = request.json['songID']
+        
+        #get chords
+        song = songDB.Songs.find_one({'_id':ObjectId(songID)})
+
+        try:
+            key = song['key']
+        except:
+            key = " "
+
+        try:
+            lyrics = util.getPrettified_Lyrics(song['lyrics'])
+        except:
+            lyrics = ""
+
+        linesCount = len(lyrics.split('\n')) - 1
+        try:
+            chords = util.getPrettified_Chords(song['chords'], linesCount , key, key)
+        except:
+            chords = (util.pad(" ", util.chordWidth) * linesCount)
+
+        details = {'chords': chords}
+
+    except Exception,e:
+        print(str(e))
+        traceback.print_exc()
+        return str(e)
+    return json.dumps(details)
+
 
 @application.route('/insertChord',methods=['POST'])
 def putChord():
