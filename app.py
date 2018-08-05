@@ -13,7 +13,7 @@ client = MongoClient(cf.DB_HOST, cf.DB_PORT)
 db = client[cf.DB_NAME]
 
 
-# songDB.authenticate(cf.DB_USER, cf.DB_PASS)
+songDB.authenticate(cf.DB_USER, cf.DB_PASS)
 
 
 
