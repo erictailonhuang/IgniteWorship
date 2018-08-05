@@ -109,7 +109,7 @@
                 </tr>
                 <tr>
                     <!-- reconcile -->
-                    <div ng-show="badLogin" id="badLogin">
+                    <div ng-if="badLogin" id="badLogin">
                         The email associated with this account was not expected. Sign out and try again with a valid account.<br><br>Click <a href="https://docs.google.com/spreadsheets/d/1QjcA6Ds6--hBa4W23cIUiK5q52lI_dnTudgaAg2Z-hM/edit#gid=1393807361" onclick="signOut();" ng-click="logout()">here</a> to sign out and find your correct email address.<br><br>Report any issues to eric@ericthuang.com.
                     </div>
                 </tr>
