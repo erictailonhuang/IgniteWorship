@@ -30,9 +30,6 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 
-
-
-
     <script>
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
@@ -136,10 +133,10 @@
                     </div>
                     <!-- hide if already done -->
                     <div id="surveyCompletedView" ng-if="surveyView && surveyCompleted">
-                            Your response has been recorded.<br><br>
-                            <a href="#" ng-click="clearSurvey()">Resubmit Response</a>
-                            <br>
-                            Only your most recent response will be considered.
+                        Your response has been recorded.<br><br>
+                        <a href="#" ng-click="clearSurvey()">Resubmit Response</a>
+                        <br>
+                        Only your most recent response will be considered.
 
 
                     </div>

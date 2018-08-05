@@ -151,12 +151,12 @@ body {
 	width: 100%;
 	float: left;
 	position: fixed;
-	/*display: block;*/
+	display: block;
 	top: 0;
 	padding-left: 160px;
 	padding-top:30px;
     height: 100vh;
-    /*overflow: hidden;*/
+    overflow: hidden;
     z-index: -100;
 }
 
