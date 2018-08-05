@@ -1,316 +1,183 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="app">
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="huange">
 
-    <title>SongCloud</title>
+
+    <title>IgniteWorship</title>
 
 
     <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
     <link type="text/css" rel="stylesheet" href="static/fonts/fontStyles.css"> <!-- fonts -->
     <link type="text/css" rel="stylesheet" href="static/css/style.css"> <!-- styling -->    
+
+
+
+    <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
+    <!-- <script src="//code.angularjs.org/snapshot/angular-sanitize.js"></script> -->
     <script src="static/js/jquery-3.2.1.js"></script>
-    <script src="static/js/jquery.lettering-0.6.1.min.js"></script>
-    <script src="static/js/angular.js"></script>
-    <script src="static/js/content.js"></script> <!-- angular controllers and stuff -->
+    <!-- <script src="static/js/angular.js"></script> -->
+    <script src="static/js/content.js"></script> 
+    <!-- angular controllers and stuff -->
+
+
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="442419246140-r3532q36h8169nt8knjukmjbjae67n8f.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+
+
+
+
     <script>
-        // ensure simultaneous scroll
-        $(function () {
-            $('#lyricsDisplay').scroll(function () {
-                $('#lyricsChordInput').scrollTop($(this).scrollTop());
-                $('#chordsDisplay').scrollTop($(this).scrollTop());
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
             });
-            $('#chordsDisplay').scroll(function () {
-                $('#lyricsChordInput').scrollTop($(this).scrollTop());
-                $('#lyricsDisplay').scrollTop($(this).scrollTop());
+        }
+
+        function onLoad() {
+            gapi.load('auth2', function() {
+            gapi.auth2.init();
             });
-            $('#lyricsChordInput').scroll(function () {
-                $('#chordsDisplay').scrollTop($(this).scrollTop());
-                $('#lyricsDisplay').scrollTop($(this).scrollTop());
-            });
-        });
-
-        // bpm values
-        $(function(){
-            var $select = $(".bpmVals");
-            for (i=1;i<=250;i++){
-                $select.append($('<option></option>').val(i).html(i))
-            }
-        });
-
-        // modal input auto select on load
-        $(function () {
-            $('#addChordPopUp').on('shown.bs.modal', function() {
-                $('#chordInputField').focus();
-            })
-        });
-
+        }
     </script>
+
 
 </head>
 
-<body ng-controller="HomeCtrl" class="{{ bodyClass }}" ng-cloak>
+<body ng-controller="HomeCtrl" class="{{ bodyClass }}">
 
     <!-- sidebar -->
-    <div id="sidebar" class="col-3" align="center">
+    <div id="sidebar" class="col-3">
         <table>
             <tr align="center">
                 <td id="titleRow" align="center">
-                    <a href="/" id="title">SONGCLOUD</a>
-                    <!-- ng-click="showAddPopUp()"  -->
-                    <button ng-click="addSong()" id="addNewSongBtn">
-                        <span class="glyphicon glyphicon-plus" style="font-size: 15px"></span> NEW
-                    </button>
+                    <center><a href="/" id="title">IgniteWorship</a></center>
                 </td>
             </tr>
-
-            <tr valign="middle">
+            <tr>
                 <td>
-                    <div class="inner-addon left-addon">
-                        <input type="search" id="searchBar" ng-model="query" class="form-control" ng-focus="searchFocusOn()" ng-blur="searchFocusOff()"/>
-                        <i id="searchIcon" class="glyphicon glyphicon-search"></i>
+                    <div ng-show="!loggedIn" id="googleLogin">
+                        <center><div class="g-signin2" data-onsuccess="onSignIn"></div> </center>
+                    </div>
+                    <div ng-show="loggedIn">
+                        <center>
+                            <p id="nameDisplay" ng-bind="currentProfile.getName()"></p>
+                            <img ng-src="{{'{{profileImage}}'}}" id="photo"/>
+                        </center>
+                    </div>
+                    <div ng-show="loggedIn" id="signoutButton">
+                        <center><a href="#" onclick="signOut();" ng-click="logout()">Sign Out</a></center>
+                        <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
                     </div>
                 </td>
             </tr>
-            <tr><td id="padding" ></td></tr>
-        </table>
-
-        <div id="songList">
-            <table >
-                <tr ng-repeat="song in Songs | filter:query | orderObjectBy:'songName'" ng-click="setSelected(song.id)" ng-class="{selected: song.id === idSelected}">
-                    <td id="songitem" ng-click="showSong(song.id)">
-                        {{'{{song.songName}}'}}
-                        <span ng-hide="true">{{'{{song.artist}}'}}</span>
-                        <span ng-hide="true">{{'{{song.lyrics}}'}}</span>
+            <div>
+                <tr >
+                    <td id="sidebarButtons" ng-show="loggedIn">
+                        <span ng-click="toggleSurvey()" aria-hidden="true">
+                            <center >Complete<br>Survey</center>
+                        </span>
                     </td>
                 </tr>
-            </table>
-        </div>
-        
-    </div>
-
-    <!-- toolbar -->
-    <div ng-model="currentSong">
-        <table class="table">
-            <!-- toolbar: view mode -->
-            <tr ng-if="!editMode && !chordEditMode" id="toolbar_Row" align="right"> 
-                <!-- sidebar toggle -->
-                <td id="toolbar_td_sidebarToggle" ng-show="showMainSongDiv">
-                    <span id="sidebarToggle" ng-click="openSidebar()" class="glyphicon glyphicon-menu-hamburger"  aria-hidden="true"></span>
-
-                    <!-- <a href="/" id="title">SONGCLOUD</a> -->
-                    <!-- ng-click="showAddPopUp()"  -->
-                    <!-- <button ng-click="addSong()" id="addNewSongBtn"> -->
-                        <!-- <span class="glyphicon glyphicon-plus" style="font-size: 15px"></span> NEW -->
-                    <!-- </button> -->
-                </td>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator" ng-show="showMainSongDiv">|</td>
-                <!-- key select button during normal view mode-->
-                <td id="toolbar_td_keySelect" ng-show="showMainSongDiv">
-                    <div class="dropdown">
-                        <button id="keySelectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-if="showMainSongDiv">
-                            <span style="text-align:left; padding: 0px;">
-                                Key: {{'{{selectedKey}}'}}
-                                <span style="float:right; font-size:10px; padding-top: 4px; padding-bottom: 0px; padding-right: 18px; vertical-align: middle;" class="glyphicon glyphicon-triangle-bottom"></span>
-                            </span>
-                        </button>
-                        <ul id="dropdownList" class="dropdown-menu" labelledby="keySelectButton">
-                            <li ng-repeat="a in keys | orderBy:'a'">
-                                <a id="dropDownList_item" ng-click="keySelected_DD(a)">
-                                    {{'{{a}}'}} Major
-                                </a>
-                            </li>
-                        </ul>
+                <tr >
+                    <td id="sidebarButtons" ng-show="loggedIn">
+                        <span ng-click="toggleSchedule()" aria-hidden="true">
+                            <center >View<br>Schedule</center>
+                        </span>
+                    </td>
+                </tr>
+                <tr >
+                    <td id="sidebarButtons" ng-show="loggedIn">
+                        <span ng-click="toggleSwap()" aria-hidden="true">
+                            <center >Request<br>Swap</center>
+                        </span>
+                    </td>
+                </tr>
+                <tr >
+                    <td id="sidebarButtons" ng-show="loggedIn">
+                        <span ng-click="toggleRequests()" aria-hidden="true">
+                            <center>Pending<br>Requests</center>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <!-- reconcile -->
+                    <div ng-show="badLogin" id="badLogin">
+                        The email associated with this account was not expected. Sign out and try again with a valid account.<br><br>Click <a href="https://docs.google.com/spreadsheets/d/1QjcA6Ds6--hBa4W23cIUiK5q52lI_dnTudgaAg2Z-hM/edit#gid=1393807361" onclick="signOut();" ng-click="logout()">here</a> to sign out and find your correct email address.<br><br>Report any issues to eric@ericthuang.com.
                     </div>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator" ng-show="showMainSongDiv">|</td>
-                <!-- show/hide chord button -->
-                <td id="toolbar_td_textToggle" ng-show="showMainSongDiv">
-                    <span ng-if="!lyricsOnlyMode" ng-click="toggleLyricsOnlyMode()" alt="lyrics only" aria-hidden"true">
-                        <center>HIDE<br>CHORDS</center>
-                    </span>
-                    <span ng-if="lyricsOnlyMode" style="color:#88d1fa;" ng-click="toggleLyricsOnlyMode()" alt="lyrics + chords display" aria-hidden="true">
-                        <center>SHOW<br>CHORDS</center>
-                    </span>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator" ng-show="showMainSongDiv">|</td>
-                <!-- delete song button -->
-                <td id="toolbar_td_deleteSongButton" ng-click="confirmDelete(currentSong.id)" ng-show="showMainSongDiv">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true" alt="delete song"></span>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator" ng-show="showMainSongDiv">|</td>
-                <!-- editMode button -->
-                <td id="toolbar_td_editMode" ng-click="toggleEditMode()" ng-show="showMainSongDiv">
-                    <span style="color:#adadad" class="glyphicon glyphicon-pencil" aria-hidden="true" alt="enable song editing"></span>
-                </td>
-            </tr>
-
-            <!-- toolbar: edit lyrics/chords mode -->
-            <tr ng-if="editMode" id="toolbar_Row" align="right"> 
-                <!-- sidebar toggle -->
-                <td id="toolbar_td_sidebarToggle">
-                    <span id="sidebarToggle" ng-click="openSidebar()" class="glyphicon glyphicon-menu-hamburger"  aria-hidden="true"></span>
-                    <!-- <a href="/" id="title">SONGCLOUD</a> -->
-                    <!-- ng-click="showAddPopUp()"  -->
-                    <!-- <button ng-click="addSong()" id="addNewSongBtn"> -->
-                        <!-- <span class="glyphicon glyphicon-plus" style="font-size: 15px"></span> NEW -->
-                    <!-- </button> -->
-                </td>
-                <!-- autosave notification -->
-                <td id="toolbar_td_autosave" ng-hide="chordEditMode">
-                    <div ng-if="showAutosaveMessage" class="message fadein fadeout">AUTOSAVE</div>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator" ng-show="showMainSongDiv">|</td>
-                <!-- key select button during edit view mode-->
-                <td id="toolbar_td_keySelect" ng-if="showMainSongDiv">
-                    <div class="dropdown">
-                        <button type="button" id="keySelectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-if="showMainSongDiv">
-                            <span style="text-align:left; padding: 0px;">
-                                Key: {{'{{selectedKey}}'}}
-                                <span style="float:right; font-size:10px; padding-top: 4px; padding-bottom: 0px; padding-right: 18px; vertical-align: middle;" class="glyphicon glyphicon-triangle-bottom"></span>
-                            </span>
-                        </button>
-                        <ul id="dropdownList" class="dropdown-menu" labelledby="keySelectButton">
-                            <li ng-repeat="a in keysInput | orderBy:'a'">
-                                <a id="dropDownList_item" ng-click="keySelected_DD(a)">
-                                    {{'{{a}}'}} Major
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator">|</td>
-                <!-- chordEdit button -->
-                <td id="toolbar_td_textToggle">
-                    <span ng-if="!chordEditMode" ng-click="chordEditModeOn()" aria-hidden="true" alt="enable chord editing">
-                        <center>EDIT<br>CHORDS</center>
-                    </span>
-                    <span ng-if="chordEditMode" style="color:#88d1fa" ng-click="chordEditModeOff()" aria-hidden="true" alt="disable chord editing">
-                        <center>EDIT<br>CHORDS</center>
-                    </span>
-                </td>
-                <!-- separator -->
-                <td id="toolbar_separator">|</td>
-                <!-- editMode button -->
-                <td id="toolbar_td_editMode" ng-click="toggleEditMode()">
-                    <span style="color:#88d1fa" aria-hidden="true" alt="disable song editing" id="saveButton">SAVE</span>
-                </td>
-
-            </tr>
+                </tr>
+            </div>
         </table>
     </div>
 
-    <!-- main song content area -->
-    <div ng-show="showMainSongDiv" id="mainDisplay" class="col-9" ng-model="currentSong">
+
+
+    <!-- main content area -->
+    <div ng-show="loggedIn" id="mainDisplay" class="col-9">
         <table class="table" cellspacing="0" cellpadding="0">
-            <tr>
-                <td id="songTitleDisplay">
-                    <!-- song name  -->
-                    <!-- if in viewing mode -->
-                    <span ng-if="!editMode" ng-bind="currentSong.songName" id="songTitleDisplay"></span>
-                    <!-- if in edit mode -->
-                    <span ng-if="editMode && !chordEditMode"  id="songTitleDisplay">
-                        <textarea style="width: 100%" ng-model="currentSong.songName" ng-model="info.songName" id="editModeInputBoxes_title" maxlength="40" placeholder="song name" required></textarea>
-                    </span>
-                    <!-- if in chord edit mode -->
-                    <span ng-if="chordEditMode" ng-bind="currentSong.songName"style="color:#cbcbcb;" id="songTitleDisplay"></span>
-                </td>
-            </tr>
-            <tr>
-                <td id="headerRow">
-                    <!-- artist -->
-                    <span ng-if="!editMode" ng-bind="currentSong.artist" id="artistHeader"></span>
-                    <span ng-if="editMode && !chordEditMode">
-                        <input style="width: 100%" ng-model="currentSong.artist" id="editModeInputBoxes_details" id="artistHeader" placeholder="artist name">
-                    </span>
-                    <span ng-if="chordEditMode" ng-bind="currentSong.artist" style="color:#cbcbcb;" id="artistHeader"></span>
-
-
-                    <!-- URL -->
-                    <span ng-if="!editMode" ng-bind="currentSong.URL" id="urlHeader"></span>
-                    <span ng-if="chordEditMode" ng-bind="currentSong.URL" style="color:#cbcbcb;" id="urlHeader"></span>
-                </td>
-            </tr>   
-        
-
             <tr>   
                 <td id="contentDisplayDiv">
-                    <!-- chords overlay-->
-                    <div ng-hide="(editMode && !chordEditMode) || lyricsOnlyMode" id="chordsDisplay" ng-bind="currentSong.chords"></div>
+                    <!-- welcome -->
+                    <div ng-if="welcomeView" id="welcomeView"> 
+                        Hi {{'{{userFirstName}}'}}
+                    </div>
+                <!-- survey -->
+                    <div id="surveyView" ng-if="surveyView"> 
+                        <!-- only load when clicked for the first time (avoid redundant count increments) -->
+                        <center><iframe ng-if="iframeLoaded && !surveyCompleted" ng-src="{{'{{surveyURL}}'}}" frameborder="0" height="1000px" width="100%" iframe-onload="iframeLoadedCallBack()">Loading...</iframe></center>
+                        
+                    </div>
+                    <!-- hide if already done -->
+                    <div id="surveyCompletedView" ng-if="surveyView && surveyCompleted">
+                            Your response has been recorded.<br><br>
+                            <a href="#" ng-click="clearSurvey()">Resubmit Response</a>
+                            <br>
+                            Only your most recent response will be considered.
 
-                    <!-- normal view mode with chords-->
-                    <div ng-hide="editMode || lyricsOnlyMode" id="lyricsDisplay" ng-bind="currentSong.lyrics"></div>
 
-                    <!-- view mode with only lyrics-->
-                    <div ng-hide="!lyricsOnlyMode || editMode" id="lyricsOnlyDisplay" ng-bind="currentSong.lyrics"></div>
+                    </div>
 
-                    <!-- edit mode -->
-                    <textarea id="lyricsEdit" ng-if="editMode && !chordEditMode" type="text" ng-model="currentSong.lyrics" placeholder="type song lyrics here"></textarea>
+                <!-- schedule -->
+                    <div ng-if="scheduleView" id="scheduleView">
+                        This will be available before Sept 1. 
+                    </div>
 
-                    <!-- lyrics for chord input mode -->
-                    <div class="character_split" ng-hide="!chordEditMode" id="lyricsChordInput" ng-click="getClickedLetter()" ng-bind="currentSong.lyrics"></div>
+                <!-- swap -->
+                    <div ng-if="swapView" id="swapView">
+                        Swap weeks with someone else if you have unforeseen scheduling conflicts. 
+                        <br>
+                        <br>
+                        Not available yet!
+                    </div>
+
+                <!-- requests -->
+                    <div ng-if="requestsView" id="requestsView">
+                        Accept or decline swap requests. 
+                        <br>
+                        <br>
+                        Not available yet!
+                    </div>
+
                 </td>
             </tr>
         </table>
     </div>
-        
 
-<!-- add chord modal popup -->
-    <div class="modal fade" id="addChordPopUp" tabindex="-1">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form>
-                        <center><div class="form-group">
-                            <label class="control-label">Chord</label> 
-                            <input type="text"  class="form-control" ng-model="chordToAdd_chord" id="chordInputField" ng-bind="currentSong.key" onclick="this.focus();this.select()" maxlength="9"></input>
-                        </div></center>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <center>
-                        <button type="button"  class="btn btn-default" data-dismiss="modal" ng-click="closeAddChordModal()">Cancel</button>
-                        <button id="btnAdd" ng-click="addChord()" type="button" class="btn btn-primary">Insert</button>
-                    </center>
-                </div>
-            </div>
-        </div>
-    </div>
 
-<!-- delete confirmation -->
-    <div id="deleteConfirm" class="modal fade bs-example-modal-md in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4>
-                        <center>Delete <b ng-bind="currentSong.songName"></b>?</center>
-                    <h4/>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeDeleteModal()">Cancel</button>
-                    <button type="button" ng-click="deleteSong()" class="btn btn-primary">Delete <b><span ng-bind="currentSong.songName"></b></span></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-    <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
 
 </body>
 
 </html>
+
+
+
+
+
+

@@ -1,0 +1,7 @@
+Questions,LeaderOnly,ResponseType,MinValue,MaxValue,MinOptions,MaxOptions,Options
+Woud you like to serve in non-leader roles?,x,boolean,null,null,null,null,null
+What is your primary instrument?,,multipleChoice,null,null,1,1,"no instrument, acoustic guitar, bass guitar, electric guitar, keyboard, drums, percussion"
+Will you be singing this quarter?,,boolean,null,null,null,null,null
+Which weeks are you unavailable?,,multipleChoice,null,null,0,4,dynamic
+When was the last week you were on stage?,,multipleChoice,null,null,1,1,dynamic
+Do you mind slightly more stage time this quarter?,,boolean,null,null,null,null,null

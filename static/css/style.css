@@ -1,8 +1,13 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 } /*prevents fouc*/
+
+
 body {
 	overflow: hidden;
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
 }
 .character_split span:hover { /*for chord input letter highlighting*/
     background-color: #00e0e8;
@@ -58,52 +63,6 @@ body {
     display: table;
 }
 
-/* enable absolute positioning */
-.inner-addon {
-  position: relative;
-}
-/* style glyph */
-.inner-addon .glyphicon {
-  position: absolute;
-  padding: 12px;
-  pointer-events: none;
-}
-/* align glyph */
-.left-addon .glyphicon  { left: 1.5%;}
-/* add padding  */
-.left-addon input  { padding-left:  40px; }
-
-
-
-/*sidebar*/
-
-#sidebar_tablet {
-	width: 25vw;
-	height: 100vh;
-	max-height: 100vh;
-	position: fixed;
-	border-right: 1px solid;
-	border-color: #dddddd;
-	background-color: #fafafa;
-	display:none;
-	transition: 0.2s;
-	margin: auto;
-	z-index: 200;
-}
-
-#sidebar {
-	width: 30.2vw;
-	height: 100vh;
-	max-height: 100vh;
-	position: fixed;
-	border-right: 1px solid;
-	border-color: #dddddd;
-	background-color: #fafafa;
-	display:none;
-	transition: 0.2s;
-	margin: auto;
-	display:none; /*hides sidebar when window is narrow*/
-}
 
 #titleRow {
 	padding-top: 4%;
@@ -115,474 +74,119 @@ body {
 	font-family: 'robotoCondensed';
 	opacity: 0.68;
 	color: #000000;
-	letter-spacing: 2px;
-	padding-left: 1.3vw;
-	float: left;
+	letter-spacing: 1.5px;
+	/*padding-left: 1.3vw;*/
 }
 
-#addNewSongBtn {
-	padding-top: 5px;
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    cursor:pointer;
-    outline:none;
-    font-family: 'robotoMedium';
-	font-size: 14px;
-	color: #37B0E8;
-	letter-spacing: 0.5px;
-	border: none;
-	margin: auto;
-	float: right;
-	padding-right: 0px;
-}
-
-#searchDiv { /*outer box*/
-
-}
-#searchIcon {
-	padding-left: 12px;
-	padding-right: 8px;
-	color:#b0b0b0;
-	font-size: 16;
-	/*margin: auto;*/
-	display: inline;
-	vertical-align: middle;
-}
-#searchBar {
-
-	box-shadow: inset 0px 0px 0px 0px;
-	border: 1.5px solid #DDDDDD;
-	border-radius: 0px;
-	background: #FFFFFF;
-    height: 40px;
-    width: 26.7vw;
-    margin: auto;
-    line-height: 20px;
-    font-size: 15px;
-    font-family: 'robotoRegular';
-    outline: none;
-    vertical-align: middle;
-    display: inline-block;
-}
-#searchBar:focus{
-	box-shadow: inset 0px 0px 0px 0px;
-	border: 1.5px solid #37B0E8;
-}
-#padding{
-	height: 1vh;
-}
-
-#songList {
-	width: 26.7vw;
-	font-size: 14px;
-	color: #000000;
-	height: 100%;
-	overflow-y: scroll;
-	padding-bottom: 1vh;
-
-}
-.selected {
-	background-color: #daecf6;
-}
-
-#songitem {
-	width: 26.7vw;
-	height: 5.3vh;
-	box-shadow: inset 0 -1px 0 0 #DDDDDD;
-	font-family: 'robotoRegular';
-	opacity: 0.87;
-	border: 0.25px;
-	line-height: 40px;
-	padding-left: 1.3vw;
-}
-#songitem:hover {
-	background: #F3F3F3;
-}
-
-/*tool bar*/
-#toolbar_Row {
-	border-top: 0px solid;
-	border-bottom: 1px solid;
+#sidebar {
+	width: 160px;
+	height: 100vh;
+	max-height: 100vh;
+	position: fixed;
+	border-right: 1px solid;
 	border-color: #dddddd;
-	vertical-align: middle;
-	padding: 0px;
-	height: 40px;
-	width: 100vw;
-	float: right;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	background-color: #fafafa;
+	transition: 0.2s;
+	margin: auto;
 }
 
-#toolbar_separator{
-	border-top: 0px solid;
-	font-size: 24px;
-	align: center;
-	vertical-align: middle;
-	align: center;
-	color: #DDDDDD;
-	opacity: 0.80;
-	font-family: 'stint';
-	padding: 0px;
-	width: 1px;
-	padding-left: 10px;
-	padding-right: 10px;
+#photo {
+	z-index: 1000;
 }
 
-#toolbar_td_sidebarToggle {
-	border-top: 0px solid;
-	vertical-align: middle;
-	align: left;
-	font-family: 'robotoRegular';
-	font-size: 17px;
-	color:#adadad;
-	padding-left:20px;
-	padding-right: 10px;
-	cursor:pointer; 
-	align: left;
-	/*width: 56px;*/
-}
-#toolbar_td_autosave{
-	border-top: 0px solid;
-	vertical-align: middle;
-	align: right;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding: 0px;
-	align: right;
-	vertical-align: middle;
-	font-size: 12px;
-	letter-spacing: 0.5px;
-	/*width: 100px;*/
-	color: #37B0E8;
-	font-family: 'robotoMedium';
-}
-#toolbar_td_keySelect {
-	border-top: 0px solid;
-	vertical-align: middle;
-	align: right;
-	font-family: 'robotoRegular';
-	font-size: 17px;
-	color: #37B0E8;
-	padding-left: 10px;
-	/*padding-right: 10px;*/
-	padding: 0px;
-	width: 100px;
-	cursor:pointer; 
-}
-
-#toolbar_td_textToggle {
-	border-top: 0px solid;
-	vertical-align: middle;
-	align: right;
-	font-family: 'robotoMedium';
-	font-size: 10px;
-	line-height: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding: 0px;
-	cursor:pointer;
-	color:#adadad;
-	/*width: 10px;*/
-}
-#toolbar_td_deleteSongButton {
-	border-top: 0px solid;
-	vertical-align: middle;
-	align: right;
-	font-family: 'robotoRegular';
-	font-size: 17px;
-	color:#adadad;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding: 0px;
-	cursor:pointer; 
-	/*width: 10px;*/
-}
-#toolbar_td_editMode {
-	border-top: 0px solid;
-	vertical-align: middle;
-	align: right;
-	font-family: 'robotoRegular';
-	font-size: 17px;
-	color: #37B0E8;
-	padding: 0px;
-	padding-left: 10px;
-	padding-right: 20px;
-	/*width: 56px;*/
-	cursor:pointer; 
-}
-
-#keySelectButton {
-	border-top: 0px solid;
-	align: right;
-	width: 100px;
-	z-index: 999;
-	padding: 0px;
-	background-color: Transparent;
-	font-family: 'robotoRegular';
+#nameDisplay {
 	font-size: 13px;
-	opacity: 0.54;
-	border: 0px solid;
-	color: rgba(0,0,0,0.87);
-	outline:none;
-	vertical-align: middle;
-	cursor:pointer; 
-}
-#keySelectButton:focus{
+	font-family: 'robotoRegular';
 	opacity: 1;
+	color: #12314f;
+	float: center;
+	z-index: -100;
 }
 
-#dropdownList {
-	border-top: 0px solid;
-	border-color: #b0b0b0;
-    margin: auto;
-    width: 100px;
-    z-index: 100;
-    background: #FFFFFF;
-	border: 1px solid #EEEEEE;
-	box-shadow: 0 2px 7px 0 rgba(0,0,0,0.12);
-	border-radius: 2px;
-	line-height: 32px;
-	vertical-align: middle;
-	width: auto;
-}
-
-#dropDownList_item {
-	opacity: 0.87;
+#signoutButton {
+	font-size: 11px;
+	letter-spacing: 2px;
 	font-family: 'robotoRegular';
+	opacity: 1;
+	color: #2c2d2d;
+	float: center;
+	z-index: -100;
+}
+
+#signoutButton:hover {
+	text-decoration: underline;
+	cursor:pointer; 
+}
+
+
+#sidebarButtons {
 	font-size: 13px;
+	font-family: 'robotoRegular';
+	opacity: 0.80;
 	color: #000000;
-	vertical-align: middle;
-	line-height: 32px;
-	/*width: 100px;*/
-}
-#dropDownList_item.hover {
-	color: rgba(55,176,232,0.16);
+	letter-spacing: 1px;
+	padding-top: 25px;
+
 }
 
-#sidebarToggle {
-	visibility: visible; /*this div is holding the toolbar height and is crappy design*/
-	height: 20px;
-	font-size: 15px;
-	padding-left: 14px;
-	padding-right: 16px;
-	vertical-align: middle;
-	padding-top: 4px;
-	/*padding-bottom: 8px;*/
+#sidebarButtons:hover {
+	text-decoration: underline;
+	cursor:pointer; 
 }
 
-#saveButton {
-	font-family: 'robotoMedium';
-	font-size: 14px;
-	color: #37B0E8;
-	letter-spacing: 0.5px;
+#titleRow {
+	padding-top: 4%;
+	padding-bottom: 5%;
 }
 
-/*main display*/
+#googleLogin {
+	/*padding-left: 5px;*/
+	padding-top: 10px;
+	float: center;
+	margin: auto;
+}
+
 #mainDisplay {
 	z-index: -5;
-	/*width: 100vw;*/
+	width: 100%;
 	float: left;
 	position: fixed;
-	display: block;
+	/*display: block;*/
 	top: 0;
-	padding-left: 4.5vw;
+	padding-left: 160px;
 	padding-top:30px;
-    height: auto;
-    width : auto;
-    overflow-x: hidden;
-}
-
-#songTitleDisplay {
-	font-family: 'robotoRegular';
-	padding-top: 4.5vh;
-	padding-left: 2vw; /*5.7-1.7*/
-	padding-bottom: 0px;
-	font-size: 24px;
-	color: rgba(0,0,0,0.87);
-	border: 0px;
-	word-wrap: break-word;
-}
-
-#headerRow {
-	font-size: 8pt;
-	z-index: -1;
-	font-family: 'robotoRegular';
-	border: none;
-	padding-left: 4vw; /*5.7-1.7*/
-	word-wrap: break-word;
-    width: 70vw;	
-}
-
-#artistHeader {
-    float: left;
-    padding-top: 0px;
-    font-size:10pt;
-}
-
-#urlHeader {
-    float: right;
-    font-size:9.5pt;
-}
-
-#txtboxBPM {
-	width: 120px;
-    padding: 15px;
+    height: 100vh;
+    /*overflow: hidden;*/
+    z-index: -100;
 }
 
 #contentDisplayDiv { 
+	/*display: inline-block;*/
+	width: 100%;
+
 	padding-top: 1vh;
-	padding-left: 4vw; /*5.7-1.7*/
+	padding-left: 4vw; 
 	font-family: 'menloRegular';
 	color: rgba(0,0,0,0.87);
 	line-height: 20px;
 	border: none;
-	overflow-y:hidden;
+	
+	z-index:40;
 	opacity: 0.87;
 	font-size: 15px;
 	padding-bottom: 5vh;
+	/*position: auto;*/
 }
 
-#lyricsDisplay {
-    display: block;
-    padding-top: 17px;
-    white-space: pre-wrap; /*WHY NOT WORKING*/
-    /*text-transform: uppercase;*/
-	overflow: auto; 
-	line-height: 40px;
-	vertical-align: text-bottom;
-	resize: none;
-	position:relative;
-	z-index:2;
-	background-color: Transparent;
-	height: 80vh;
-	width: 65vw;
-}
-
-#lyricsOnlyDisplay {
-
-    display: block;
-    white-space: pre-wrap; /*WHY NOT WORKING*/
-    /*text-transform: uppercase;*/
-	overflow: auto; 
-	line-height: 20px;
-	vertical-align: text-bottom;
-	font-size: 11pt;
-	resize: none;
-	position:relative;
-	z-index:2;
-	background-color: Transparent;
-	height: 80vh;
-	width: 65vw;
-}
-
-#chordsDisplay {
-    white-space: pre-wrap;
-    position:absolute;
-	overflow: auto; 
-	line-height: 40px;
-	vertical-align: text-bottom;
-	z-index:0;
-	background-color: Transparent;
-	color: #88d1fa;
-	/*no highlight*/
-	-webkit-user-select: none;  
-	-moz-user-select: none;    
-	-ms-user-select: none;      
-	user-select: none;
-	height: 80vh;
-	width: 65vw;
-}
-
-#lyricsEdit {
+#surveyView {
 	position: fixed;
-    display: block;
-    white-space: pre-wrap;
-    /*text-transform: uppercase;*/
-	overflow: auto; 
-	line-height: 20px;
-	border: none;
-	vertical-align: text-bottom;
-	resize: none;
-	height: 80vh;
-	width: 65vw;
-	outline:none;
+	top: -140px;
+	left: 0px;
+	right: 0px;
+	overflow-y:auto;
+	width: 100vw;
 }
 
-#lyricsChordInput {
-    display: block;
-    white-space: pre-wrap;
-    /*text-transform: uppercase;*/
-	overflow: auto; 
-	padding-top: 17px;
-	line-height: 40px;
-	vertical-align: text-bottom;
-	resize: none;
-	cursor: crosshair;
-	position:relative;
-	color: #adadad;
-	z-index:2;
-	background-color: Transparent;
-	/*no highlight*/
-	-webkit-user-select: none;  
-	-moz-user-select: none;    
-	-ms-user-select: none;      
-	user-select: none;
-	height: 80vh;
-	width: 65vw;
-}
-
-/*other*/
-#addChordPopUp {
-}
-
-#chordInputField {/* for modal box*/
-	width: 100px;
-}
-
-#editModeInputBoxes_title {
-	padding: 0px;
-	border: 0.5px solid;
-    border-radius: 2px;
-    height: 31px;
-    background-color: Transparent;
-    /*width: 60%;*/
-    border: none;
-	resize: none;
-	outline:none;
-}
-
-#editModeInputBoxes_details {
-	padding: 0px;
-	border: 0.5px solid;
-    border-radius: 2px;
-    height: 16px;
-    background-color: Transparent;
-    border:none;
-    /*outline-width: 0;*/
-	resize: none;
-	outline:none;
-	font-size:10pt;
-}
-
-@media screen and (min-width:800px){ /*this takes effect when window is above 1024, overrides specific attributes already defined ^ up there*/
-    #sidebar {
-        display:block;
-    }
-
-    #mainDisplay {
-    	left: 25vw;
-    	width: auto;
-    }
-    #sidebarToggle {
-    	visibility: hidden;
-    }
-
-}
-input[type="search"] {
-  -webkit-appearance: searchfield;
-}
-input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance: searchfield-cancel-button;
+#alreadyCompletedMessage {
+	overflow-y:auto;
 }
