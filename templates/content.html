@@ -45,13 +45,6 @@
         }
     </script>
 
-    <script>
-        function resizeIframe(obj) {
-            obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-        }
-    </script>
-
-
 </head>
 
 <body ng-controller="HomeCtrl" class="{{ bodyClass }}">
@@ -140,7 +133,7 @@
                     <!-- hide if already done -->
                     <div id="surveyCompletedView" ng-if="surveyView && surveyCompleted">
                         Your response has been recorded.<br><br>
-                        <a href="#" ng-click="clearSurvey()" scrolling="no" onload="resizeIframe(this)">Resubmit Response</a>
+                        <a href="#" ng-click="clearSurvey()">Resubmit Response</a>
                         <br>
                         Only your most recent response will be considered.
 
