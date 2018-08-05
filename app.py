@@ -16,7 +16,6 @@ db = client[cf.DB_NAME]
 db.authenticate(cf.DB_USER, cf.DB_PASS)
 
 
-
 @application.route('/')
 def loadLogin():
     return render_template('content.html')
