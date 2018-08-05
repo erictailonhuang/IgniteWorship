@@ -1,5 +1,9 @@
 var app = angular.module('app', []);
 
+var port_number = server.listen(process.env.PORT || 2000);
+app.listen(port_number);
+
+
 app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
     var scope = $scope;
     var sce = $sce;
