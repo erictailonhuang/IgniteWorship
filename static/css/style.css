@@ -149,7 +149,7 @@ body {
 #mainDisplay {
 	z-index: -5;
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	float: left;
 	position: fixed;
 	/*display: block;*/
