@@ -1,3 +1,8 @@
+var port = process.env.PORT || 2000;
+app.listen(port, "0.0.0.0", function() {
+console.log("Listening on Port 3000");
+});
+
 var app = angular.module('app', []);
 
 app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $sce) {

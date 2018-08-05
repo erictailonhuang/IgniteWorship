@@ -2,7 +2,7 @@ import os
 
 '''for heroku'''
 hostName = 'localhost'
-portNo = int(os.environ.get("PORT", 5000))
+portNo = int(os.environ.get("PORT", 2000))
 
 DB_NAME = "heroku_jzbkv8xb"
 DB_HOST = "ds213612.mlab.com"
