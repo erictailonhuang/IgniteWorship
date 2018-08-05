@@ -45,6 +45,12 @@
         }
     </script>
 
+    <script>
+        function resizeIframe(obj) {
+            obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        }
+    </script>
+
 
 </head>
 
@@ -128,7 +134,7 @@
                 <!-- survey -->
                     <div id="surveyView" ng-if="surveyView"> 
                         <!-- only load when clicked for the first time (avoid redundant count increments) -->
-                        <center><iframe ng-if="iframeLoaded && !surveyCompleted" ng-src="{{'{{surveyURL}}'}}" frameborder="0" height="1000px" width="100%" iframe-onload="iframeLoadedCallBack()">Loading...</iframe></center>
+                        <center><iframe ng-if="iframeLoaded && !surveyCompleted" ng-src="{{'{{surveyURL}}'}}" frameborder="0" height="1000px" width="100%" iframe-onload="iframeLoadedCallBack()" scrolling="no" onload="resizeIframe(this)">Loading...</iframe></center>
                         
                     </div>
                     <!-- hide if already done -->
