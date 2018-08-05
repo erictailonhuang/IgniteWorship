@@ -15,9 +15,6 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
     $scope.isLeader = false;
     $scope.surveyCompleted = false;
 
-
-
-
     $scope.loggedIn = false;
     $scope.badLogin = false;
     $scope.welcomeView = false;
