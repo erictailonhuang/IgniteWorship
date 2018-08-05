@@ -70,5 +70,5 @@ def setSurveyCompleteStatus():
 
 if __name__ == "__main__":
     application.debug = True
-    application.run(host = cf.hostName, port = cf.portNo)
+    application.run(host = cf.hostName, port = cf.portNo, processes=2)
     
