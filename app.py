@@ -73,5 +73,5 @@ if __name__ == "__main__":
     # application.debug = True
     # application.run(host = cf.hostName, port = cf.portNo, processes=2)
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    application.run(host='0.0.0.0', port=port)
     
