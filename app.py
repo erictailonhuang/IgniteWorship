@@ -8,10 +8,15 @@ import time
 import csv
 import os
 
+devMode = False;
+
 application = Flask(__name__)
 
-# herokuDeploy = False
-herokuDeploy = True
+client = MongoClient(cf.DB_HOST, cf.DB_PORT)
+db = client[cf.DB_NAME]
+
+if not devMode:
+	db.authenticate(cf.DB_USER, cf.DB_PASS)
 
 
 @application.route('/')
@@ -67,12 +72,10 @@ def setSurveyCompleteStatus():
 
 
 if __name__ == "__main__":
-    if herokuDeploy:
-    	client = MongoClient(cf.DB_HOST, cf.DB_PORT)
-    	db = client[cf.DB_NAME]
-    	db.authenticate(cf.DB_USER, cf.DB_PASS)
-    	port = int(os.environ.get('PORT', 5000))
-    	application.run(host='0.0.0.0', port=port)
-    else: 
-    	application.debug = True
-    	application.run(host = cf.hostName, port = cf.portNo, processes=2)
+	if devMode:
+		application.debug = True
+		application.run(host = cf.hostName, port = cf.portNo, processes=2)
+	else:
+		port = int(os.environ.get('PORT', 5000))
+		application.run(host='0.0.0.0', port=port)
+
