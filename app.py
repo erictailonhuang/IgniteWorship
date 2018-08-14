@@ -8,7 +8,7 @@ import time
 import csv
 import os
 
-devMode = False;
+devMode = True;
 
 application = Flask(__name__)
 

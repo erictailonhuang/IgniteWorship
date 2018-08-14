@@ -22,6 +22,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
     $scope.scheduleView = false;
     $scope.swapView = false;
     $scope.requestsView = false;
+    $scope.adminView = false;
     $scope.requestsCount = 0;
 
     $scope.iframeLoaded = false;
@@ -108,6 +109,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
         $scope.scheduleView = false;
         $scope.swapView = false;
         $scope.requestsView = false;
+        $scope.adminView = false;
         if ($scope.iframeLoaded == false) {
             $scope.iframeLoaded = true;
         }
@@ -119,6 +121,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
         $scope.scheduleView = true;
         $scope.swapView = false;
         $scope.requestsView = false;
+        $scope.adminView = false;
     };
     $scope.toggleSwap = function(){
         console.log("TOGGLING SWAP");
@@ -127,6 +130,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
         $scope.scheduleView = false;
         $scope.swapView = true;
         $scope.requestsView = false;
+        $scope.adminView = false;
     };
     $scope.toggleRequests = function(){
         console.log("TOGGLING REQUESTS");
@@ -135,6 +139,17 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
         $scope.scheduleView = false;
         $scope.swapView = false;
         $scope.requestsView = true;
+        $scope.adminView = false;
+    };
+
+    $scope.toggleAdmin = function(){
+        console.log("TOGGLING ADMIN");
+        $scope.welcomeView = false;
+        $scope.surveyView = false;
+        $scope.scheduleView = false;
+        $scope.swapView = false;
+        $scope.requestsView = false;
+        $scope.adminView = true;
     };
 
     $scope.logout = function(){
@@ -145,6 +160,7 @@ app.controller('HomeCtrl', ['$scope', '$http', '$sce', function($scope, $http, $
         $scope.scheduleView = false;
         $scope.swapView = false;
         $scope.requestsView = false;
+        $scope.adminView = false;
         $scope.requestsCount = 0;
         $scope.currentProfileImage = null;
 

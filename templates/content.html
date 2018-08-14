@@ -103,6 +103,13 @@
                         </span>
                     </td>
                 </tr>
+                <tr >
+                    <td id="sidebarButtons" ng-show="loggedIn && isAdmin">
+                        <span ng-click="toggleAdmin()" aria-hidden="true">
+                            <center>Admin<br>Console</center>
+                        </span>
+                    </td>
+                </tr>
                 <tr>
                     <!-- reconcile -->
                     <div ng-if="badLogin" id="badLogin">
@@ -161,6 +168,9 @@
                         Not available yet!
                     </div>
 
+                    <div ng-if="isAdmin && adminView"> 
+                        ADMIN VIEW
+                    </div>
                 </td>
             </tr>
         </table>
